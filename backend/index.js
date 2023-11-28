@@ -23,7 +23,7 @@ const connectDB = async () => {
 //middlewares
 dotenv.config();
 app.use(express.json());
-app.use("/images", express.static(path.join(__dirname, "/images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(cors({ origin: ['http://localhost:5173', 'https://blogmarket.vercel.app'], credentials: true }));
 app.use(cookieParser());
 app.use("/api/auth", authRoute);
@@ -37,10 +37,11 @@ const storage = multer.diskStorage({
     fn(null, "images");
   },
   filename: (req, file, fn) => {
-    fn(null, req.body.img);
-    // fn(null,"image1.jpg")
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    fn(null, file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname));
   },
 });
+
 
 const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
@@ -52,3 +53,4 @@ app.listen(process.env.PORT, () => {
   connectDB();
   console.log("app is running on port " + process.env.PORT);
 });
+
