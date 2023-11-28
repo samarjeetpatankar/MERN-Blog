@@ -58,12 +58,16 @@ router.get("/logout", async (req, res) => {
 //REFETCH USER
 router.get("/refetch", (req, res) => {
   const token = req.cookies.token;
+  console.log("Received token:", token); // Log the received token
   jwt.verify(token, process.env.SECRET, {}, async (err, data) => {
     if (err) {
+      console.error("JWT verification error:", err); // Log the verification error
       return res.status(404).json(err);
     }
+    console.log("Decoded data:", data); // Log the decoded data
     res.status(200).json(data);
   });
 });
 
-module.exports = router;
+
+module.exports = router; 

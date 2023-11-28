@@ -15,15 +15,15 @@ export function UserContextProvider({ children }) {
 
   const getUser = async () => {
     try {
-      const res = await axios.get(URL + "/api/auth/refetch", {
+      const res = await axios.get("https://blog-app-hrs3.onrender.com/api/auth/refetch", {
         withCredentials: true,
       });
-      // console.log(res.data)
-      setUser(res.data);
+       console.log(res.data) 
+      setUser(res.data); 
     } catch (err) {
-      console.log(err);
+      console.log(err); 
     }
-  };
+  }; 
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
