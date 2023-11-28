@@ -22,6 +22,7 @@ const PostDetails = () => {
   const fetchPost = async () => {
     try {
       const res = await axios.get(URL + "/api/posts/" + postId);
+      // console.log(res.data)
       setPost(res.data);
     } catch (err) {
       console.log(err);
@@ -74,6 +75,8 @@ const PostDetails = () => {
         { withCredentials: true }
       );
 
+      // fetchPostComments()
+      // setComment("")
       window.location.reload(true);
     } catch (err) {
       console.log(err);
@@ -120,9 +123,11 @@ const PostDetails = () => {
             <p>Categories:</p>
             <div className="flex justify-center items-center space-x-2">
               {post.categories?.map((c, i) => (
-                <div key={i} className="bg-gray-300 rounded-lg px-3 py-1">
-                  {c}
-                </div>
+                <>
+                  <div key={i} className="bg-gray-300 rounded-lg px-3 py-1">
+                    {c}
+                  </div>
+                </>
               ))}
             </div>
           </div>

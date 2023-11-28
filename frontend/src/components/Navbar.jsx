@@ -51,7 +51,7 @@ const Navbar = () => {
           <h3>
             <Link to="/login">Login</Link>
           </h3>
-        )} 
+        )}
         {user ? (
           <div onClick={showMenu}>
             <p className="cursor-pointer relative">

@@ -2,9 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import axios from "axios";
-import { URL } from "../url"; 
+import { URL } from "../url";
 
-const Register = () => { 
+const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

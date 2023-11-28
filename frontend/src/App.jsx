@@ -11,7 +11,7 @@ import MyBlogs from "./pages/MyBlogs";
 
 const App = () => {
   return (
-    <UserContextProvider> 
+    <UserContextProvider>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<Login />} />
