@@ -55,19 +55,37 @@ router.get("/logout", async (req, res) => {
   }
 });
 
-//REFETCH USER
-router.get("/refetch", (req, res) => {
-  const token = req.cookies.token;
-  console.log("Received token:", token); // Log the received token
-  jwt.verify(token, process.env.SECRET, {}, async (err, data) => {
-    if (err) {
-      console.error("JWT verification error:", err); // Log the verification error
-      return res.status(404).json(err);
+// REFETCH USER
+router.get("/refetch", async (req, res) => {
+  try {
+    // Retrieve the token from the cookie
+    const token = req.cookies.token;
+
+    // Check if the token is not present
+    if (!token) {
+      return res.status(401).json("Unauthorized");
     }
-    console.log("Decoded data:", data); // Log the decoded data
-    res.status(200).json(data);
-  });
+
+    // Verify the token
+    const decoded = jwt.verify(token, process.env.SECRET);
+
+    // Find the user using the decoded token information
+    const user = await User.findOne({ _id: decoded._id });
+
+    if (!user) {
+      return res.status(404).json("User not found!");
+    }
+
+    // Exclude the password field from the user object
+    const { password, ...userInfo } = user._doc;
+
+    res.status(200).json(userInfo);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
+
  
 
 module.exports = router; 
+
