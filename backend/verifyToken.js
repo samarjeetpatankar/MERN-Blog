@@ -5,6 +5,7 @@ const verifyToken = (req, res, next) => {
 
   if (!token) {
     return res.status(401).json("You are not authenticated!");
+    console.log("You are not authenticated!");
   }
 
   jwt.verify(token, process.env.SECRET, async (err, data) => {
@@ -19,3 +20,4 @@ const verifyToken = (req, res, next) => {
 };
 
 module.exports = verifyToken;
+ 

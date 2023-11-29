@@ -14,7 +14,7 @@ const Comment = ({ c, post }) => {
       });
       window.location.reload(true);
     } catch (err) {
-      console.log(err);
+      console.log(err); 
     }
   };
   // console.log(post.userId)
