@@ -60,21 +60,16 @@ router.get("/logout",async (req,res)=>{
 })
 
 //REFETCH USER
-router.get("/api/auth/refetch", (req, res) => {
-    const token = req.cookies.token; // Assuming the token is stored in a cookie
-  
-    if (!token) {
-      return res.status(401).json({ error: "jwt must be provided" });
-    }
-  
-    jwt.verify(token, process.env.SECRET, {}, async (err, data) => {
-      if (err) {
-        return res.status(401).json({ error: "Invalid token" });
-      }
-      res.status(200).json(data);
-    });
-  });
-  
+router.get("/refetch", (req,res)=>{
+    const token=req.cookies.token
+    jwt.verify(token,process.env.SECRET,{},async (err,data)=>{
+        if(err){
+            return res.status(404).json(err)
+        }
+        res.status(200).json(data)
+    })
+})
+
  
 
 module.exports=router
