@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { FaEdit, FaSave, FaTrash } from "react-icons/fa";
 import axios from "axios";
 
 const Comments = ({ blogId }) => {
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState(null);
   const [editingCommentId, setEditingCommentId] = useState(null);
-  const [error, setError] = useState(null); // New state to handle errors
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -13,10 +14,10 @@ const Comments = ({ blogId }) => {
         const response = await axios.get(
           `http://localhost:5000/comment/${blogId}/all`
         );
-        setComments(response.data || []); // Ensure that comments is always an array
+        setComments(response.data || []);
       } catch (error) {
         console.error("Error fetching comments:", error.response.data);
-        setError("Error fetching comments. Please try again later."); // Set the error state
+        setError("Error fetching comments. Please try again later.");
       }
     };
 
@@ -70,15 +71,13 @@ const Comments = ({ blogId }) => {
         { content: newContent },
         { headers }
       );
-
-      // Update the state without mutating it directly
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment._id === commentId
             ? { ...comment, content: newContent }
             : comment
         )
-      ); 
+      );
 
       setEditingCommentId(null); // Reset the editing comment ID
     } catch (error) {
@@ -112,8 +111,6 @@ const Comments = ({ blogId }) => {
   return (
     <div className="mt-8">
       <h2 className="text-3xl font-semibold mb-6">Comments</h2>
-
-      {/* Display error message if there's an error */}
       {error && <p className="text-red-500">{error}</p>}
 
       {user ? (
@@ -161,21 +158,21 @@ const Comments = ({ blogId }) => {
                     }
                     className="mr-4 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
                   >
-                    Save
+                    <FaSave />
                   </button>
                 ) : (
                   <button
                     onClick={() => setEditingCommentId(comment._id)}
                     className="mr-4 bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600"
                   >
-                    Edit
+                    <FaEdit />
                   </button>
                 )}
                 <button
                   onClick={() => handleDeleteComment(comment._id)}
                   className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
                 >
-                  Delete
+                  <FaTrash />
                 </button>
               </div>
             )}

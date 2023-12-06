@@ -33,7 +33,7 @@ const Articles = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {blogs.map((blog) => (
           <div key={blog._id} className="bg-white p-6 rounded shadow-md">
-            <Link to={`/${blog._id}`}>
+            <Link to={`/ArticleDetail/${blog._id}`}>
               <img
                 src={blog.photo}
                 alt={blog.title}
