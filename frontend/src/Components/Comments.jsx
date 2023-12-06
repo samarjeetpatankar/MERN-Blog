@@ -4,6 +4,8 @@ import axios from "axios";
 const Comments = ({ blogId }) => {
   const [comments, setComments] = useState([]);
   const [user, setUser] = useState(null);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [error, setError] = useState(null); // New state to handle errors
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -11,9 +13,10 @@ const Comments = ({ blogId }) => {
         const response = await axios.get(
           `http://localhost:5000/comment/${blogId}/all`
         );
-        setComments(response.data);
+        setComments(response.data || []); // Ensure that comments is always an array
       } catch (error) {
         console.error("Error fetching comments:", error.response.data);
+        setError("Error fetching comments. Please try again later."); // Set the error state
       }
     };
 
@@ -54,19 +57,64 @@ const Comments = ({ blogId }) => {
     }
   };
 
-  const handleUpdateComment = async (commentId) => {
-    // Implement the logic for updating a comment
-    console.log(`Update comment with id ${commentId}`);
+  const handleUpdateComment = async (commentId, newContent) => {
+    try {
+      const token = user.token;
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+
+      await axios.put(
+        `http://localhost:5000/comment/${commentId}`,
+        { content: newContent },
+        { headers }
+      );
+
+      // Update the state without mutating it directly
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment._id === commentId
+            ? { ...comment, content: newContent }
+            : comment
+        )
+      );
+
+      setEditingCommentId(null); // Reset the editing comment ID
+    } catch (error) {
+      console.error("Error updating comment:", error.response.data);
+    }
   };
 
   const handleDeleteComment = async (commentId) => {
-    // Implement the logic for deleting a comment
-    console.log(`Delete comment with id ${commentId}`);
+    try {
+      const token = user.token;
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      await axios.delete(`http://localhost:5000/comment/${commentId}`, {
+        headers,
+      });
+
+      const response = await axios.get(
+        `http://localhost:5000/comment/${blogId}/all`,
+        {
+          headers,
+        }
+      );
+      setComments(response.data);
+    } catch (error) {
+      console.error("Error deleting comment:", error.response.data);
+    }
   };
 
   return (
     <div className="mt-8">
       <h2 className="text-3xl font-semibold mb-6">Comments</h2>
+
+      {/* Display error message if there's an error */}
+      {error && <p className="text-red-500">{error}</p>}
 
       {user ? (
         <CommentForm onSubmit={handleCommentSubmit} />
@@ -74,34 +122,68 @@ const Comments = ({ blogId }) => {
         <p className="text-gray-800">Please log in to comment.</p>
       )}
 
-      {comments.map((comment) => (
-        <div
-          key={comment._id}
-          className="bg-white p-6 mb-6 rounded-md shadow-lg"
-        >
-          <p className="text-gray-800 text-lg mb-2">{comment.content}</p>
-          <div className="flex items-center justify-between text-gray-600">
-            <p>{comment.username}</p>
-            <p>{new Date(comment.createdAt).toLocaleString()}</p>
-          </div>
-          {user && user.username === comment.username && (
-            <div className="mt-4">
-              <button
-                onClick={() => handleUpdateComment(comment._id)}
-                className="mr-4 bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600"
-              >
-                Update
-              </button>
-              <button
-                onClick={() => handleDeleteComment(comment._id)}
-                className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
-              >
-                Delete
-              </button>
+      {comments && comments.length > 0 ? (
+        comments.map((comment) => (
+          <div
+            key={comment._id}
+            className="bg-white p-6 mb-6 rounded-md shadow-lg"
+          >
+            {editingCommentId === comment._id ? (
+              <div className="mb-4">
+                <textarea
+                  value={comment.content}
+                  onChange={(e) =>
+                    setComments((prevComments) =>
+                      prevComments.map((prevComment) =>
+                        prevComment._id === comment._id
+                          ? { ...prevComment, content: e.target.value }
+                          : prevComment
+                      )
+                    )
+                  }
+                  className="w-full p-4 border rounded-md"
+                  required
+                ></textarea>
+              </div>
+            ) : (
+              <p className="text-gray-800 text-lg mb-2">{comment.content}</p>
+            )}
+            <div className="flex items-center justify-between text-gray-600">
+              <p>{comment.username}</p>
+              <p>{new Date(comment.createdAt).toLocaleString()}</p>
             </div>
-          )}
-        </div>
-      ))}
+            {user && user.username === comment.username && (
+              <div className="mt-4">
+                {editingCommentId === comment._id ? (
+                  <button
+                    onClick={() =>
+                      handleUpdateComment(comment._id, comment.content)
+                    }
+                    className="mr-4 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600"
+                  >
+                    Save
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setEditingCommentId(comment._id)}
+                    className="mr-4 bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600"
+                  >
+                    Edit
+                  </button>
+                )}
+                <button
+                  onClick={() => handleDeleteComment(comment._id)}
+                  className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        ))
+      ) : (
+        <p>No comments available.</p>
+      )}
     </div>
   );
 };
