@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Comments from './Comments';
 
 const ArticleDetail = () => {
   const { id } = useParams();
@@ -42,6 +43,7 @@ const ArticleDetail = () => {
           <p className="text-gray-600">{blog.content}</p>
         </div>
       </div>
+      <Comments blogId={id} /> 
     </div>
   );
 };

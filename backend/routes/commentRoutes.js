@@ -10,3 +10,4 @@ router.put("/:commentId", authUser, commentController.updateComment);
 router.delete("/:commentId", authUser, commentController.deleteComment);
 
 module.exports = router;
+  
