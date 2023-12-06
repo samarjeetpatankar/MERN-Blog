@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/user");
+const blogRoutes = require("./routes/blogRoutes");
 
 dotenv.config();
 const connectDB = async () => {
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRoutes);
+app.use("/blog", blogRoutes);
 
 app.listen(process.env.PORT, () => {
   connectDB();
