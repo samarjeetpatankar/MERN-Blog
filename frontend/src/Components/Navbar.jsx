@@ -23,32 +23,42 @@ function Navbar() {
         </Link>
 
         <ul className="flex flex-col md:flex-row md:space-x-4 text-black">
-          <li>
-            <Link to="/" className="text-lg hover:text-blue-300">
+          <button>
+            <Link to="/" className="text-2xl py-1 px-2">
               Home
             </Link>
-          </li>
-          <li>
-            <Link to="/about" className="text-lg hover:text-blue-300">
+          </button>
+          <button>
+            <Link to="/about" className="text-2xl py-1 px-2">
               About
             </Link>
-          </li>
+          </button>
           {isLoggedIn ? (
-            <li className="flex items-center">
-              <span className="text-lg mr-2">{`Welcome, ${userName}`}</span>
-              <button
-                onClick={handleLogout}
-                className="text-lg hover:text-blue-300"
-              >
-                Logout
-              </button>
-            </li>
+            <>
+              <li>
+                <Link
+                  to="/createblogs"
+                  className="text-2xl py-1 px-2 border border-black rounded"
+                >
+                  Create Blog
+                </Link>
+              </li>
+              <li className="flex items-center ">
+                <span className="text-2xl mr-2">{`Welcome, ${userName}`}</span>
+                <button
+                  onClick={handleLogout}
+                  className="text-2xl border border-black rounded py-1 px-2"
+                >
+                  Logout
+                </button>
+              </li>
+            </>
           ) : (
             <>
               <li>
                 <Link
                   to="/register"
-                  className="text-lg hover:text-blue-300 border border-black px-3 py-1 rounded"
+                  className="text-2xl border border-black py-1 px-2 rounded"
                 >
                   Register
                 </Link>
@@ -56,7 +66,7 @@ function Navbar() {
               <li>
                 <Link
                   to="/login"
-                  className="text-lg hover:text-blue-300 border border-black px-3 py-1 rounded"
+                  className="text-2xl border border-black py-1 px-2 rounded"
                 >
                   Login
                 </Link>
