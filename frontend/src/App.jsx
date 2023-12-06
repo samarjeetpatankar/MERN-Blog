@@ -1,16 +1,26 @@
-import React from 'react'
-import Home from './Components/Home'
-import Navbar from './Components/Navbar'
-import Footer from './Components/Footer'
+import React from "react";
+import Home from "./Components/Home";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import Layout from "./Layout.jsx";
 
-const App = () => {
+function App() {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Layout />}>
+        <Route path="" element={<Home />} />
+      </Route>
+    )
+  );
   return (
-    <div>
-      <Navbar />
-      <Home />
-      <Footer />
-    </div>
-  )
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
-export default App
+export default App;
