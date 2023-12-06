@@ -12,7 +12,7 @@ const connectDB = async () => {
   } catch (err) {
     console.log(err);
   }
-};
+}; 
 
 app.get("/", (req, res) => {
   res.send("Welcome to the home page!");
