@@ -2,13 +2,16 @@ const Blog = require("../models/blogModel");
 
 const createBlog = async (req, res) => {
   try {
-    const { title, description, photo, categories, content, tags } = req.body;
+    const { title, description, categories, content, tags } = req.body;
+
+    // Get the filename of the uploaded file
+    const photo = req.file.filename;
 
     const newBlog = new Blog({
       title,
       description,
       photo,
-      username: req.user.username, 
+      username: req.user.username,
       categories,
       content,
       tags,
@@ -56,8 +59,8 @@ const updateBlog = async (req, res) => {
     await blog.save();
 
     res.status(200).json({ message: "Blog updated successfully", blog });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (error) { 
+    res.status(500).json({ error: error.message }) ;
   }
 };
 
@@ -80,3 +83,7 @@ module.exports = {
   updateBlog,
   deleteBlog,
 };
+
+
+
+ 

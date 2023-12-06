@@ -11,6 +11,7 @@ import Articles from "./Components/Articles.jsx";
 import ArticleDetail from "./Components/ArticleDetail.jsx";
 import Register from "./Components/Register.jsx";
 import Login from "./Components/Login.jsx";
+import CreateBlogs from "./Components/CreateBlogs.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -21,6 +22,7 @@ function App() {
         <Route path="/:id" element={<ArticleDetail />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/createblogs" element={<CreateBlogs />} />
       </Route>
     )
   );

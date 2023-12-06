@@ -78,7 +78,7 @@ const Comments = ({ blogId }) => {
             ? { ...comment, content: newContent }
             : comment
         )
-      );
+      ); 
 
       setEditingCommentId(null); // Reset the editing comment ID
     } catch (error) {
