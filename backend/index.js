@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
 const blogRoutes = require("./routes/blogRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 
 dotenv.config();
 const connectDB = async () => {
@@ -14,6 +15,7 @@ const connectDB = async () => {
     console.log(err);
   }
 };
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -22,6 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRoutes);
 app.use("/blog", blogRoutes);
+app.use("/comment", commentRoutes);
 
 app.listen(process.env.PORT, () => {
   connectDB();
