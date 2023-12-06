@@ -32,10 +32,13 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+
     if (!user) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
+
     const passwordMatch = await bcrypt.compare(password, user.password);
+
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
@@ -44,11 +47,20 @@ const loginUser = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.status(200).json({ token });
+    // Include additional user information in the response
+    const userResponse = {
+      token,
+      userId: user._id,
+      username: user.username,
+      email: user.email,
+    };
+
+    res.status(200).json(userResponse);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 module.exports = { registerUser, loginUser };
 

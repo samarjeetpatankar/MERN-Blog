@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -17,18 +18,38 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const { login } = useAuth(); 
 
+  const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/user/login', formData);
-      console.log('Login successful:', response.data);
-      navigate('/');
+      const response = await axios.post(
+        "http://localhost:5000/user/login",
+        formData
+      );
+
+      if (response && response.data) {
+        console.log("Login successful:", response.data);
+
+        // Save user data to local storage
+        localStorage.setItem("userData", JSON.stringify(response.data));
+
+        // Update authentication context with user data
+        login(response.data);
+
+        // Navigate to the home page
+        navigate("/");
+      } else {
+        console.error("Login failed. No data received from the server.");
+      }
     } catch (error) {
-      console.error('Error during login:', error.response.data);
+      console.error("Error during login:", error);
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
+  };
   return (
     <div className="container mx-auto mt-8">
       <div className="max-w-md mx-auto bg-white rounded-md p-8 shadow-md">

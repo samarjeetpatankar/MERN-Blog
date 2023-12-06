@@ -1,7 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Context/AuthContext";
 
-function Navbar({ isLoggedIn, userName }) {
+function Navbar() {
+  const { isLoggedIn, userName, logout } = useAuth();
+  console.log('isLoggedIn:', isLoggedIn);
+  console.log('userName:', userName);
+  
+
+  const handleLogout = () => {
+    // Clear user data from local storage
+    localStorage.removeItem("userData");
+    logout();
+  };
+
   return (
     <nav className="bg-blue-200 text-white py-4">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
@@ -19,8 +31,14 @@ function Navbar({ isLoggedIn, userName }) {
             </Link>
           </li>
           {isLoggedIn ? (
-            <li>
-              <span className="text-lg">{`Welcome, ${userName}`}</span>
+            <li className="flex items-center">
+              <span className="text-lg mr-2">{`Welcome, ${userName}`}</span>
+              <button
+                onClick={handleLogout}
+                className="text-lg hover:text-blue-300"
+              >
+                Logout
+              </button>
             </li>
           ) : (
             <>
