@@ -2,21 +2,13 @@ const Blog = require("../models/blogModel");
 
 const createBlog = async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      photo,
-      username,
-      categories,
-      content,
-      tags,
-    } = req.body;
+    const { title, description, photo, categories, content, tags } = req.body;
 
     const newBlog = new Blog({
       title,
       description,
       photo,
-      username,
+      username: req.user.username, 
       categories,
       content,
       tags,
@@ -60,6 +52,9 @@ const updateBlog = async (req, res) => {
     if (!blog) {
       return res.status(404).json({ error: "Blog not found" });
     }
+    blog.updatedAt = Date.now();
+    await blog.save();
+
     res.status(200).json({ message: "Blog updated successfully", blog });
   } catch (error) {
     res.status(500).json({ error: error.message });
