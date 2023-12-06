@@ -4,9 +4,8 @@ import { useAuth } from "../Context/AuthContext";
 
 function Navbar() {
   const { isLoggedIn, userName, logout } = useAuth();
-  console.log('isLoggedIn:', isLoggedIn);
-  console.log('userName:', userName);
-  
+  console.log("isLoggedIn:", isLoggedIn);
+  console.log("userName:", userName);
 
   const handleLogout = () => {
     // Clear user data from local storage
@@ -17,7 +16,11 @@ function Navbar() {
   return (
     <nav className="bg-blue-200 text-white py-4">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <h1 className="text-4xl text-black font-bold mb-4 md:mb-0">Blog App</h1>
+        <Link to="/">
+          <h1 className="text-4xl text-black font-bold mb-4 md:mb-0">
+            Blog App
+          </h1>
+        </Link>
 
         <ul className="flex flex-col md:flex-row md:space-x-4 text-black">
           <li>
