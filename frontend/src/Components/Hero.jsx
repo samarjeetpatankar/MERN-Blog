@@ -3,15 +3,16 @@ import { FiSearch } from "react-icons/fi";
 
 function Hero() {
   return (
-    <section className="bg-[#edf3fc] flex flex-col px-5 pt-1 pb-1 lg:flex-row mx-auto"> 
-
+    <section className="bg-[#edf3fc] flex flex-col px-5 pt-1 pb-1 lg:flex-row mx-auto">
       <div className="mt-10 ml-5 lg:mt-[28px] xl:mt-[66px] lg:w-1/2">
         <h1 className="font-roboto text-3xl font-bold text-dark-soft text-center md:text-5xl lg:text-4xl xl:text-5xl lg:text-left lg:max-w-[540px]">
           Read the most interesting articles
         </h1>
         <p className=" text-dark-light mt-4 text-center md:text-xl lg:text-base xl:text-xl lg:text-left">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua
+          Explore captivating stories on our blog! Dive into thought-provoking
+          articles covering diverse topics. Check out our latest posts,
+          handpicked editor's favorites, and popular reader choices. Discover a
+          world of interesting reads below. Happy reading!
         </p>
         <div className="flex flex-col gap-y-9 mt-10 lg:mt-6 xl:mt-10 relative">
           <div className="relative">
@@ -28,7 +29,7 @@ function Hero() {
           </button>
         </div>
         <div className="flex flex-col lg:flex-row lg:flex-nowrap lg:items-start lg:gap-x-4 mt-4 lg:mt-7 ">
-        <span className="text-dark-light font-semibold italic mt-2 lg:mt-4 lg:text-sm xl:text-base">
+          <span className="text-dark-light font-semibold italic mt-2 lg:mt-4 lg:text-sm xl:text-base">
             Popular Tags :
           </span>
           <ul className="flex flex-wrap gap-x-2.5 gap-y-2.5 mt-3 lg:text-sm xl:text-base">
@@ -57,5 +58,3 @@ function Hero() {
 }
 
 export default Hero;
-
-
