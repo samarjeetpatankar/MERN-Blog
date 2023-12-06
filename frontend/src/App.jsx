@@ -9,6 +9,8 @@ import {
 import Layout from "./Layout.jsx";
 import Articles from "./Components/Articles.jsx";
 import ArticleDetail from "./Components/ArticleDetail.jsx";
+import Register from "./Components/Register.jsx";
+import Login from "./Components/Login.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -17,6 +19,8 @@ function App() {
         <Route path="" element={<Home />} />
         <Route path="" element={<Articles />} />
         <Route path="/:id" element={<ArticleDetail />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
       </Route>
     )
   );
