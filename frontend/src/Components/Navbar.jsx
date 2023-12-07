@@ -36,34 +36,41 @@ function Navbar() {
             </Link>
           </button>
           {isLoggedIn ? (
-            <li className="relative group">
-              <button
-                onClick={handleToggleDropdown}
-                className="text-2xl py-1 px-2 border border-black rounded focus:outline-none focus:border-gray-500 group-hover:bg-gray-100"
-              >
-                Welcome, {userName}
+            <>
+              <button>
+                <Link to="/createblogs" className="text-2xl py-1 px-2">
+                  CreateBlogs
+                </Link>
               </button>
-              {showDropdown && (
-                <ul className="absolute top-full left-0 bg-white border border-gray-200 py-2 rounded shadow-md">
-                  <li>
-                    <Link
-                      to="/myprofile"
-                      className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
-                    >
-                      My Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={handleLogout}
-                      className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left"
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              )}
-            </li>
+              <li className="relative group">
+                <button
+                  onClick={handleToggleDropdown}
+                  className="text-2xl py-1 px-2 border border-black rounded focus:outline-none focus:border-gray-500 group-hover:bg-gray-100"
+                >
+                  Welcome, {userName}
+                </button>
+                {showDropdown && (
+                  <ul className="absolute top-full left-0 bg-white border border-gray-200 py-2 rounded shadow-md">
+                    <li>
+                      <Link
+                        to="/myprofile"
+                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                      >
+                        My Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleLogout}
+                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left"
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                )}
+              </li>
+            </>
           ) : (
             <>
               <li>
@@ -91,4 +98,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
