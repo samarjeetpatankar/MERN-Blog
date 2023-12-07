@@ -19,8 +19,12 @@ const Articles = () => {
   }, []);
 
   const formatUsername = (username) => {
-    return username.charAt(0).toUpperCase() + username.slice(1);
+    if (username && typeof username === 'string') {
+      return username.charAt(0).toUpperCase() + username.slice(1);
+    }
+    // return 'Unknown'; // Or any default value you prefer
   };
+  
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
