@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 
 function Navbar() {
   const { isLoggedIn, userName, logout } = useAuth();
-  console.log("isLoggedIn:", isLoggedIn);
-  console.log("userName:", userName);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogout = () => {
-    // Clear user data from local storage
     localStorage.removeItem("userData");
     logout();
+  };
+
+  const handleToggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
   };
 
   return (
@@ -34,25 +36,34 @@ function Navbar() {
             </Link>
           </button>
           {isLoggedIn ? (
-            <>
-              <li>
-                <Link
-                  to="/createblogs"
-                  className="text-2xl py-1 px-2 border border-black rounded"
-                >
-                  Create Blog
-                </Link>
-              </li>
-              <li className="flex items-center ">
-                <span className="text-2xl mr-2">{`Welcome, ${userName}`}</span>
-                <button
-                  onClick={handleLogout}
-                  className="text-2xl border border-black rounded py-1 px-2"
-                >
-                  Logout
-                </button>
-              </li>
-            </>
+            <li className="relative group">
+              <button
+                onClick={handleToggleDropdown}
+                className="text-2xl py-1 px-2 border border-black rounded focus:outline-none focus:border-gray-500 group-hover:bg-gray-100"
+              >
+                Welcome, {userName}
+              </button>
+              {showDropdown && (
+                <ul className="absolute top-full left-0 bg-white border border-gray-200 py-2 rounded shadow-md">
+                  <li>
+                    <Link
+                      to="/myprofile"
+                      className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                    >
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 w-full text-left"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </li>
           ) : (
             <>
               <li>
@@ -80,3 +91,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

@@ -6,6 +6,7 @@ const cors = require("cors"); // Import the cors middleware
 const userRoutes = require("./routes/userRoutes");
 const blogRoutes = require("./routes/blogRoutes");
 const commentRoutes = require("./routes/commentRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 
 dotenv.config();
 const connectDB = async () => {
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 app.use("/user", userRoutes);
 app.use("/blog", blogRoutes);
 app.use("/comment", commentRoutes);
+app.use("/profile", profileRoutes);
 
 app.listen(process.env.PORT, () => {
   connectDB();

@@ -12,6 +12,7 @@ import ArticleDetail from "./Components/ArticleDetail.jsx";
 import Register from "./Components/Register.jsx";
 import Login from "./Components/Login.jsx";
 import CreateBlogs from "./Components/CreateBlogs.jsx";
+import MyProfile from "./Components/MyProfile.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -23,9 +24,10 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/createblogs" element={<CreateBlogs />} />
+        <Route path="/myprofile" element={<MyProfile />} />
       </Route>
     )
-  );
+  ); 
   return (
     <>
       <RouterProvider router={router} />

@@ -4,7 +4,6 @@ const createBlog = async (req, res) => {
   try {
     const { title, description, categories, content, tags } = req.body;
 
-    // Get the filename of the uploaded file
     const photo = req.file.filename;
 
     const newBlog = new Blog({

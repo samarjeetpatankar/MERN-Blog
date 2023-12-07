@@ -61,6 +61,26 @@ const loginUser = async (req, res) => {
   }
 };
 
+const getUserDetails = async (req, res) => {
+  try {
+    // Assuming you have a middleware to extract user details from the token
+    const userId = req.user.userId;
 
-module.exports = { registerUser, loginUser };
+    // Get user details
+    const user = await User.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Get blogs created by the user
+    const userBlogs = await Blog.find({ username: user.username });
+
+    res.status(200).json({ user, blogs: userBlogs });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { registerUser, loginUser, getUserDetails };
 
